@@ -137,4 +137,11 @@ class admin_panel():
         devices=self.get_devices_in_groups(group_name)
 
         for device in devices:
-            device.turn_off()
+            device.turn_off() 
+            
+    
+    def turn_on_all_devices(self):
+
+        for devices in self.groups.items():
+            for device in devices:
+                device.turn_on()
