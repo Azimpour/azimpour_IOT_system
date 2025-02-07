@@ -84,3 +84,15 @@ class admin_panel():
                         print(f'{device} not in {group_name}')
                 else:
                         print(f'{group_name} has not been created yet')
+
+    
+    def create_device(self,group_name,device_type,name):
+        
+        if group_name in self.groups:
+            topic=f'home/{group_name}/{device_type}/{name}'
+            new_device=Device(topic)
+            self.add_device_to_group(group_name, new_device)
+            print(f'device {new_device.name} is created')
+            
+        else:
+            print(f'{group_name} has not been created yet')
