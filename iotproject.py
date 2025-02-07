@@ -14,17 +14,19 @@ class Device():
     def turn_on(self):
         
         self.status='on'
-        if name_device in topic:
-            if st=='turn on':
-                print(f'{name_device} is turned on')
+        
+        print(f'{self.name} is turned on')
         
 
     def turn_off(self):
 
         self.status='off'
-        if name_device in topic:
-            if st=='turn off':
-                print(f'{name_device} is turned off')
+        
+        print(f'{self.name} is turned off')
+        
+
+    def get_status(self):
+        return self.status
         
 
     def get_status(self):
