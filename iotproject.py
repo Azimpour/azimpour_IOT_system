@@ -151,3 +151,23 @@ class admin_panel():
         for devices in self.groups.items():
             for device in devices:
                 device.turn_on()
+
+
+    def get_status_in_group(self,group_name):
+
+        devices = self.get_devices_in_groups(group_name)
+        if devices:
+            for device in devices:
+                status = device.get_status()
+                print(f'Device {device.name} in group {group_name} is {status}')
+        
+ 
+    
+    
+    def get_status_in_device_type(self,device_type):
+        
+        for group_name, devices in self.groups.items():
+            for device in devices:
+                if device.device_type == device_type:
+                    status = device.get_status()
+                    print(f'{device.name} in {group_name} is {status}')
