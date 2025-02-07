@@ -47,4 +47,4 @@ if st=='turn on':
 elif st=='turn off':
     topic.turn_off()
 
-st.get_status()
+print(f'status{dev.name}: {dev.get_status}')
