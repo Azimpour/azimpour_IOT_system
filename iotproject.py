@@ -48,3 +48,39 @@ elif st=='turn off':
     topic.turn_off()
 
 print(f'status{dev.name}: {dev.get_status}')
+
+
+class admin_panel():
+    def __init__(self):
+        self.groups={}
+        
+        
+    def create_group(self,group_name):
+        
+        if group_name not in self.groups:
+            self.groups[group_name]=[]
+            print(f'group {group_name} is created')
+            
+        else:
+            print('your name is dublicated')
+        
+        
+    def add_device_to_group(self,group_name,device):
+        
+        if group_name in self.groups:
+            self.groups[group_name].append(device)
+            print(f'{device} was added to the {group_name} group')
+   
+        else:
+            print('your group is not created')
+
+    
+    def remove_device_from_group(self,group_name,device):
+                if group_name in self.groups:
+                    if device in self.groups[group_name]:
+                        self.groups[group_name].remove(device)
+                        print(f'{device} was remove from {group_name}')
+                    else:
+                        print(f'{device} not in {group_name}')
+                else:
+                        print(f'{group_name} has not been created yet')
