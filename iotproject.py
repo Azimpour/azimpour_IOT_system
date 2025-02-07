@@ -1,3 +1,12 @@
+
+'''
+APM:
+
+do bar neveshtid get_status function ro 
+
+'''
+
+
 class Device():
     
     def __init__(self,topic):
