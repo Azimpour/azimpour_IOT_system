@@ -96,3 +96,29 @@ class admin_panel():
             
         else:
             print(f'{group_name} has not been created yet')
+
+
+    def create_multiple_devices(self,group_name,device_type,number_of_devcies):
+        
+        if group_name in self.groups:
+            
+            for i in range(1,number_of_devcies+1):
+
+                device_name=f'{device_type}{i}'
+                topic=f'home/{group_name}/{device_type}/{device_name}'
+                new_device=Device(topic)
+                self.add_device_to_group(group_name, new_device)
+                print(f'{device_name} was added to the {group_name} group')
+
+            
+        else:
+            print(f'{group_name} has not been created yet')
+
+
+    def get_devices_in_groups(self,group_name):
+        if group_name in self.groups:
+            return self.groups[group_name] 
+            
+            
+        else:
+            print(f'the {group_name} group does not exist')
