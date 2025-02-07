@@ -122,3 +122,19 @@ class admin_panel():
             
         else:
             print(f'the {group_name} group does not exist')
+            return []
+
+
+    def turn_on_all_in_groups(self,group_name):
+        
+        devices=self.get_devices_in_groups(group_name)
+        
+        for device in devices:
+            device.turn_on()
+
+    def turn_off_all_in_groups(self,group_name):
+
+        devices=self.get_devices_in_groups(group_name)
+
+        for device in devices:
+            device.turn_off()
