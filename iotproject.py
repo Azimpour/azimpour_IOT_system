@@ -159,6 +159,7 @@ class admin_panel():
 
         for devices in self.groups.items():
             for device in devices:
+                #****** APM: inja bayad turn_off bezanid bejaye turn_on
                 device.turn_on()
 
 
@@ -168,8 +169,9 @@ class admin_panel():
         if devices:
             for device in devices:
                 status = device.get_status()
+                #yek print ezafe kardam visible tar beshe
                 print(f'Device {device.name} in group {group_name} is {status}')
-        
+                print('-------------------------------------------------------')
  
     
     
@@ -177,6 +179,7 @@ class admin_panel():
         
         for group_name, devices in self.groups.items():
             for device in devices:
+                #inja mitonid bejaye device_type biadyd benevisid device_type.strip().lower() k user eshtebah ham kard in javab bede
                 if device.device_type == device_type:
                     status = device.get_status()
                     print(f'{device.name} in {group_name} is {status}')
