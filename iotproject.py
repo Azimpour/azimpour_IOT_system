@@ -2,7 +2,8 @@
 '''
 APM:
 
-do bar neveshtid get_status function ro 
+do bar neveshtid get_status function ro
+eslah shod mamnon
 
 '''
 
@@ -37,12 +38,7 @@ class Device():
     def get_status(self):
         return self.status
         
-
-    def get_status(self):
-        return self.status
     
-
-
 topic=input('please enter (location/group/device_type/name):')
 dev=Device(topic)
 print(f' {topic} is created')
@@ -160,7 +156,8 @@ class admin_panel():
         for devices in self.groups.items():
             for device in devices:
                 #****** APM: inja bayad turn_off bezanid bejaye turn_on
-                device.turn_on()
+                #eslah shod mamnon
+                device.turn_off()
 
 
     def get_status_in_group(self,group_name):
@@ -170,6 +167,7 @@ class admin_panel():
             for device in devices:
                 status = device.get_status()
                 #yek print ezafe kardam visible tar beshe
+                #mamnon
                 print(f'Device {device.name} in group {group_name} is {status}')
                 print('-------------------------------------------------------')
  
@@ -180,6 +178,9 @@ class admin_panel():
         for group_name, devices in self.groups.items():
             for device in devices:
                 #inja mitonid bejaye device_type biadyd benevisid device_type.strip().lower() k user eshtebah ham kard in javab bede
-                if device.device_type == device_type:
+                #eslah shod mamnon
+                if device.device_type.strip().lower() == device_type:
                     status = device.get_status()
                     print(f'{device.name} in {group_name} is {status}')
+
+#baraye sensor class joda tarif konam ya faghat def bezaram?
