@@ -5,6 +5,10 @@ APM:
 do bar neveshtid get_status function ro
 eslah shod mamnon
 
+
+
+--> Bale baraye sensor bayad yek class jdoa tarif kard ke yek tabe dashte bashe be name read_data va mitone haal yek adade 
+random ya yek adade sabet harbar sedash mizanim befreste
 '''
 
 
