@@ -183,4 +183,4 @@ class admin_panel():
                     status = device.get_status()
                     print(f'{device.name} in {group_name} is {status}')
 
-#baraye sensor class joda tarif konam ya faghat def bezaram?
+#baraye sensor bayad class joda tarif konam ?
