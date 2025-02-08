@@ -196,3 +196,12 @@ class Sensor():
 
     def get_data(self):
         return self.data
+
+
+    def create_sensor(self, group_name, sensor_type, name, data):
+        if group_name in self.groups:
+            sensor=Sensor(name,data)
+            self.add_sensor_in_group(group_name, sensor)
+            print(f'Sensor {sensor.name} of type {sensor_type} is created in group {group_name}')
+        else:
+            print(f'{group_name} has not been created yet')
