@@ -184,3 +184,11 @@ class admin_panel():
                     print(f'{device.name} in {group_name} is {status}')
 
 #baraye sensor bayad class joda tarif konam ?
+
+class Sensor():
+    def __init__(self, name, data):
+        self.name=name
+        self.data=data
+
+    def get_data(self):
+        return self.data
