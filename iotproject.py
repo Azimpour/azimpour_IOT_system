@@ -69,6 +69,18 @@ class Sensor():
     def get_data(self):
         return self.data
 
+'''
+mitoonid az in estefade konid
+class Sensor():
+    def __init__(self, name):
+        self.name=name
+
+
+    def get_data(self):
+        return 25
+
+
+'''
 
 class admin_panel():
     def __init__(self):
@@ -205,6 +217,7 @@ class admin_panel():
 
     def create_sensor(self, group_name, sensor_type, name, data):
         if group_name in self.groups:
+            #age oon bala sensor ro avaz kridd inja ham havasetoon b vorodi ha bashe ****
             sensor=Sensor(name,data)
             self.add_sensor_in_group(group_name, sensor)
             print(f'Sensor {sensor.name} of type {sensor_type} is created in group {group_name}')
@@ -222,6 +235,11 @@ class admin_panel():
     def get_data_from_sensor_in_group(self, group_name):  #injaro nmidonm doroste ya na
         if group_name in self.groups:
             for sensor in self.groups[group_name]:
+                #injaa mire tooye group harchi peyda krd ro .get_data() mikone
+                #ma too yek group momkene ma device dashte bashim , sensor va ..
+                #aval bayad ba yek if check kone ke sensoree ya na
+                #age sensor bashe haal mitonim sensor_get_data bashe
+                #bad bejaye return --> print kone
                 sensor_data = [sensor.get_data()]
             return sensor_data
             
