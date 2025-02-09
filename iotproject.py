@@ -10,7 +10,7 @@ eslah shod mamnon
 --> Bale baraye sensor bayad yek class jdoa tarif kard ke yek tabe dashte bashe be name read_data va mitone haal yek adade 
 random ya yek adade sabet harbar sedash mizanim befreste
 
-khat 219 dorosre?
+
 '''
 
 
@@ -59,6 +59,15 @@ elif st=='turn off':
     topic.turn_off()
 
 print(f'status{dev.name}: {dev.get_status}')
+
+
+class Sensor():
+    def __init__(self, name, data):
+        self.name=name
+        self.data=data
+
+    def get_data(self):
+        return self.data
 
 
 class admin_panel():
@@ -191,13 +200,7 @@ class admin_panel():
 
 #baraye sensor bayad class joda tarif konam ?
 
-class Sensor():
-    def __init__(self, name, data):
-        self.name=name
-        self.data=data
 
-    def get_data(self):
-        return self.data
 
 
     def create_sensor(self, group_name, sensor_type, name, data):
@@ -225,3 +228,25 @@ class Sensor():
         else:
            print(f'{group_name} has not been created yet')
         return []
+
+
+admin=admin_panel
+
+group_name=input('please enter group name: ').strip()
+admin.create_group(group_name)
+
+
+device_type=input('please enter device type: ').strip()
+device_name=input('please enter device name: ').strip()
+admin.create_device(group_name,device_type,device_name)
+
+
+group_to_turn_on=input('please enter name of group you want to turn on the devices: ').strip()
+admin.turn_on_all_in_groups(group_to_turn_on)
+
+group_to_turn_off=input('please enter name of group you want to turn off the devices: ').strip()
+admin.turn_off_all_in_groups(group_to_turn_off)
+
+
+group_to_get_data=input('please enter the name of group you want to get sensor data: ').strip()
+admin.get_data_from_sensor_in_group(group_to_get_data)
