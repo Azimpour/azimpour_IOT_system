@@ -213,3 +213,13 @@ class Sensor():
            print(f'{sensor.name} was added to the {group_name} group')
         else:
            print(f'{group_name} has not been created yet')
+
+    def get_data_from_sensor_in_group(self, group_name):  #injaro nmidonm doroste ya na
+        if group_name in self.groups:
+            for sensor in self.groups[group_name]:
+                sensor_data = [sensor.get_data()]
+            return sensor_data
+            
+        else:
+           print(f'{group_name} has not been created yet')
+        return []
