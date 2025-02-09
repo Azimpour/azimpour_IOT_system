@@ -205,3 +205,11 @@ class Sensor():
             print(f'Sensor {sensor.name} of type {sensor_type} is created in group {group_name}')
         else:
             print(f'{group_name} has not been created yet')
+
+    
+    def add_sensor_in_group(self,group_name,sensor):
+        if group_name in self.groups:
+           self.groups[group_name].append(sensor)
+           print(f'{sensor.name} was added to the {group_name} group')
+        else:
+           print(f'{group_name} has not been created yet')
