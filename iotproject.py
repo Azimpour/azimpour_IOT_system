@@ -235,13 +235,18 @@ class admin_panel():
     def get_data_from_sensor_in_group(self, group_name):  #injaro nmidonm doroste ya na
         if group_name in self.groups:
             for sensor in self.groups[group_name]:
+                if isinstance(sensor, Sensor):
+                    sensor_data = {sensor.name: sensor.get_data()}
+                    print(f"Sensor data from group '{group_name}': {sensor_data}")
+                    return sensor_data
+                if not sensor:
+                    print(f"No sensors found in group '{group_name}'.")
+                return []
                 #injaa mire tooye group harchi peyda krd ro .get_data() mikone
                 #ma too yek group momkene ma device dashte bashim , sensor va ..
                 #aval bayad ba yek if check kone ke sensoree ya na
                 #age sensor bashe haal mitonim sensor_get_data bashe
                 #bad bejaye return --> print kone
-                sensor_data = [sensor.get_data()]
-            return sensor_data
             
         else:
            print(f'{group_name} has not been created yet')
