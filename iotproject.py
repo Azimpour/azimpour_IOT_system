@@ -101,7 +101,7 @@ class admin_panel():
         
         if group_name in self.groups:
             self.groups[group_name].append(device)
-            print(f'{device} was added to the {group_name} group')
+            print(f'{device.name} was added to the {group_name} group')
    
         else:
             print('your group is not created')
@@ -111,9 +111,9 @@ class admin_panel():
                 if group_name in self.groups:
                     if device in self.groups[group_name]:
                         self.groups[group_name].remove(device)
-                        print(f'{device} was remove from {group_name}')
+                        print(f'{device.name} was remove from {group_name}')
                     else:
-                        print(f'{device} not in {group_name}')
+                        print(f'{device.name} not in {group_name}')
                 else:
                         print(f'{group_name} has not been created yet')
 
@@ -253,6 +253,17 @@ class admin_panel():
         return []
 
 
+
+    def find_device_location(self, device_name, device_type): #tabe entekhabi
+        for group_name, devices in self.groups.items():
+            for device in devices:
+                if isinstance(device, Device) and device.name == device_name and device.device_type == device_type:
+                   print(f"Device '{device_name}' of type '{device_type}' is in group '{group_name}'.")
+                   return group_name 
+        print(f"Device '{device_name}' of type '{device_type}' not found in any group.")
+        return None
+
+
 admin=admin_panel()
 
 group_name=input('please enter group name: ').strip()
@@ -263,6 +274,10 @@ device_type=input('please enter device type: ').strip()
 device_name=input('please enter device name: ').strip()
 admin.create_device(group_name,device_type,device_name)
 
+group_name = input('Please enter group name for multiple devices: ').strip()
+device_type = input('Please enter device type: ').strip()
+number_of_devices = int(input('Please enter the number of devices you want to create: '))
+admin.create_multiple_devices(group_name, device_type, number_of_devices)
 
 group_to_turn_on=input('please enter name of group you want to turn on the devices: ').strip()
 admin.turn_on_all_in_groups(group_to_turn_on)
@@ -278,3 +293,9 @@ admin.add_sensor_in_group(group_name, new_sensor)
 
 group_to_get_data=input('please enter the name of group you want to get sensor data: ').strip()
 admin.get_data_from_sensor_in_group(group_to_get_data)
+
+
+device_name = input('Please enter the device name to find its location: ').strip()
+device_type = input('Please enter the device type: ').strip()
+admin.find_device_location(device_name, device_type)
+
