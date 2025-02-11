@@ -62,7 +62,8 @@ print(f'status{dev.name}: {dev.get_status}')
 
 
 class Sensor():
-    def __init__(self, name):
+    def __init__(self, sensor_type, name):
+        self.sensor_type=sensor_type
         self.name=name
 
     def get_data(self):
@@ -264,9 +265,11 @@ admin.turn_on_all_in_groups(group_to_turn_on)
 group_to_turn_off=input('please enter name of group you want to turn off the devices: ').strip()
 admin.turn_off_all_in_groups(group_to_turn_off)
 
+sensor_type = input('Please enter sensor type: ').strip()
+sensor_name= input('please enter sensor name: ').strip()
+admin.create_sensor(sensor_type, sensor_name)
 
-sensor_name=input('please enter sensor name: ').strip()
-admin.create_sensor(group_name, sensor_name)
+admin.add_sensor_in_group(group_name, new_sensor)
 
 group_to_get_data=input('please enter the name of group you want to get sensor data: ').strip()
 admin.get_data_from_sensor_in_group(group_to_get_data)
