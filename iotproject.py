@@ -62,12 +62,11 @@ print(f'status{dev.name}: {dev.get_status}')
 
 
 class Sensor():
-    def __init__(self, name, data):
+    def __init__(self, name):
         self.name=name
-        self.data=data
 
     def get_data(self):
-        return self.data
+        return 25
 
 '''
 mitoonid az in estefade konid
@@ -215,12 +214,12 @@ class admin_panel():
 
 
 
-    def create_sensor(self, group_name, sensor_type, name, data):
+    def create_sensor(self, group_name, sensor_name):
         if group_name in self.groups:
             #age oon bala sensor ro avaz kridd inja ham havasetoon b vorodi ha bashe ****
-            sensor=Sensor(name,data)
-            self.add_sensor_in_group(group_name, sensor)
-            print(f'Sensor {sensor.name} of type {sensor_type} is created in group {group_name}')
+            new_sensor=Sensor(sensor_name)
+            self.add_sensor_in_group(group_name, new_sensor)
+            print(f'Sensor {new_sensor} of type {sensor_type}  is created in group {group_name}')
         else:
             print(f'{group_name} has not been created yet')
 
@@ -248,7 +247,7 @@ class admin_panel():
         return []
 
 
-admin=admin_panel
+admin=admin_panel()
 
 group_name=input('please enter group name: ').strip()
 admin.create_group(group_name)
@@ -265,6 +264,9 @@ admin.turn_on_all_in_groups(group_to_turn_on)
 group_to_turn_off=input('please enter name of group you want to turn off the devices: ').strip()
 admin.turn_off_all_in_groups(group_to_turn_off)
 
+
+sensor_name=input('please enter sensor name: ').strip()
+admin.create_sensor(group_name, sensor_name)
 
 group_to_get_data=input('please enter the name of group you want to get sensor data: ').strip()
 admin.get_data_from_sensor_in_group(group_to_get_data)
