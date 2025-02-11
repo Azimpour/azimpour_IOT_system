@@ -215,12 +215,12 @@ class admin_panel():
 
 
 
-    def create_sensor(self, group_name, sensor_name):
+    def create_sensor(self, group_name, sensor_type, name):
         if group_name in self.groups:
             #age oon bala sensor ro avaz kridd inja ham havasetoon b vorodi ha bashe ****
-            new_sensor=Sensor(sensor_name)
-            self.add_sensor_in_group(group_name, new_sensor)
-            print(f'Sensor {new_sensor} of type {sensor_type}  is created in group {group_name}')
+            sensor=Sensor(sensor_type, name)
+            self.add_sensor_in_group(group_name, sensor)
+            print(f'Sensor {sensor.name} of type {sensor_type}  is created in group {group_name}')
         else:
             print(f'{group_name} has not been created yet')
 
@@ -266,8 +266,8 @@ group_to_turn_off=input('please enter name of group you want to turn off the dev
 admin.turn_off_all_in_groups(group_to_turn_off)
 
 sensor_type = input('Please enter sensor type: ').strip()
-sensor_name= input('please enter sensor name: ').strip()
-admin.create_sensor(sensor_type, sensor_name)
+name= input('please enter sensor name: ').strip()
+admin.create_sensor(sensor_type, name)
 
 admin.add_sensor_in_group(group_name, new_sensor)
 
