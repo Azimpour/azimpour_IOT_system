@@ -10,6 +10,13 @@ eslah shod mamnon
 random ya yek adade sabet harbar sedash mizanim befreste
 
 ostad taghirato ijad kardam alan doroste hamechi?
+
+
+
+APM:
+salam faghat Task1 ro anjam nadadi ke bayad class Device() ro real world ba estefade az
+ketabkhone gpio va .. , bayad biayd va yek devcie type e jadid behesh ezafe konid
+moafagh bashid
 '''
 
 
