@@ -17,6 +17,11 @@ APM:
 salam faghat Task1 ro anjam nadadi ke bayad class Device() ro real world ba estefade az
 ketabkhone gpio va .. , bayad biayd va yek devcie type e jadid behesh ezafe konid
 moafagh bashid
+
+salam ostad
+yani hamontor ke khodeton neveshte bodid?
+def __init__(self,topic, mqtt_broker='localhost', port=1883): va edamash
+injori?
 '''
 
 
