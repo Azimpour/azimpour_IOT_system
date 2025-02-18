@@ -20,9 +20,12 @@ moafagh bashid
 
 salam ostad
 yani hamontor ke khodeton neveshte bodid?
-def __init__(self,topic, mqtt_broker='localhost', port=1883): va edamash
-injori?
+
+mishe chek konin mamnonm
 '''
+
+import RPi.GPIO as GPIO
+import paho.mqtt.client as mqtt
 
 
 class Device():
@@ -36,17 +39,30 @@ class Device():
         self.device_type=self.topic_list[2]
         self.name=self.topic_list[3]
         self.status='off'
+        self.gpio_pin = self.get_gpio_pin()
+        self.setup_gpio()
+
+     def get_gpio_pin(self):
+        gpio_pins = {'lights': 17, 'doors': 27, 'fans': 22}
+        return gpio_pins.get(self.device_type, None)
+
+    def setup_gpio(self):
+        if self.gpio_pin is not None:
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(self.gpio_pin, GPIO.OUT)
 
 
     def turn_on(self):
-        
+        if self.gpio_pin is not None:
+            GPIO.output(self.gpio_pin, GPIO.HIGH)
         self.status='on'
         
         print(f'{self.name} is turned on')
         
 
     def turn_off(self):
-
+        if self.gpio_pin is not None:
+            GPIO.output(self.gpio_pin, GPIO.LOW)
         self.status='off'
         
         print(f'{self.name} is turned off')
@@ -78,7 +94,7 @@ class Sensor():
         self.name=name
 
     def get_data(self):
-        return 25
+        return {"temperature": 25, "humidity": 60}
 
 '''
 mitoonid az in estefade konid
