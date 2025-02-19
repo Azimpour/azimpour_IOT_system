@@ -22,6 +22,13 @@ salam ostad
 yani hamontor ke khodeton neveshte bodid?
 
 mishe chek konin mamnonm
+
+************************
+************************
+ostad mamnon az vaghti ke gozashtin man ta jaei ke balad bodam taghirato ijad kardam
+mamnon misham chek konin
+*************************
+***************************
 '''
 
 import RPi.GPIO as GPIO
@@ -71,21 +78,7 @@ class Device():
     def get_status(self):
         return self.status
         
-    
-topic=input('please enter (location/group/device_type/name):')
-dev=Device(topic)
-print(f' {topic} is created')
 
-
-name_device=input('please enter your device name:')
-st=input('turn off or turn on?')
-
-if st=='turn on':
-   topic.turn_on()
-elif st=='turn off':
-    topic.turn_off()
-
-print(f'status{dev.name}: {dev.get_status}')
 
 
 class Sensor():
@@ -96,18 +89,7 @@ class Sensor():
     def get_data(self):
         return {"temperature": 25, "humidity": 60}
 
-'''
-mitoonid az in estefade konid
-class Sensor():
-    def __init__(self, name):
-        self.name=name
 
-
-    def get_data(self):
-        return 25
-
-
-'''
 
 class admin_panel():
     def __init__(self):
@@ -117,7 +99,7 @@ class admin_panel():
     def create_group(self,group_name):
         
         if group_name not in self.groups:
-            self.groups[group_name]=[]
+            self.groups[group_name]={'devices': [], 'sensors': []}
             print(f'group {group_name} is created')
             
         else:
@@ -127,22 +109,25 @@ class admin_panel():
     def add_device_to_group(self,group_name,device):
         
         if group_name in self.groups:
-            self.groups[group_name].append(device)
+            self.groups[group_name]['devices'].append(device)
             print(f'{device.name} was added to the {group_name} group')
    
         else:
             print('your group is not created')
 
     
-    def remove_device_from_group(self,group_name,device):
-                if group_name in self.groups:
-                    if device in self.groups[group_name]:
-                        self.groups[group_name].remove(device)
-                        print(f'{device.name} was remove from {group_name}')
-                    else:
-                        print(f'{device.name} not in {group_name}')
-                else:
-                        print(f'{group_name} has not been created yet')
+    def remove_device_from_group(self,group_name,device_name):  #tabe entekhabi
+        if group_name in self.groups:
+            devices = self.groups[group_name]['devices']
+            for device in devices:
+                if device.name == device_name:
+                    devices.remove(device)
+                    print(f'{device.name} was remove from {group_name}')
+                    return
+            
+            print(f'{device.name} not in {group_name}')
+        else:
+            print(f'{group_name} has not been created yet')
 
     
     def create_device(self,group_name,device_type,name):
@@ -169,15 +154,13 @@ class admin_panel():
                 self.add_device_to_group(group_name, new_device)
                 print(f'{device_name} was added to the {group_name} group')
 
-            
         else:
             print(f'{group_name} has not been created yet')
 
 
     def get_devices_in_groups(self,group_name):
         if group_name in self.groups:
-            return self.groups[group_name] 
-            
+            return self.groups[group_name]['devices']
             
         else:
             print(f'the {group_name} group does not exist')
@@ -209,8 +192,6 @@ class admin_panel():
 
         for devices in self.groups.items():
             for device in devices:
-                #****** APM: inja bayad turn_off bezanid bejaye turn_on
-                #eslah shod mamnon
                 device.turn_off()
 
 
@@ -220,8 +201,6 @@ class admin_panel():
         if devices:
             for device in devices:
                 status = device.get_status()
-                #yek print ezafe kardam visible tar beshe
-                #mamnon
                 print(f'Device {device.name} in group {group_name} is {status}')
                 print('-------------------------------------------------------')
  
@@ -231,20 +210,15 @@ class admin_panel():
         
         for group_name, devices in self.groups.items():
             for device in devices:
-                #inja mitonid bejaye device_type biadyd benevisid device_type.strip().lower() k user eshtebah ham kard in javab bede
-                #eslah shod mamnon
+                
                 if device.device_type.strip().lower() == device_type:
                     status = device.get_status()
                     print(f'{device.name} in {group_name} is {status}')
-
-#baraye sensor bayad class joda tarif konam ?
-
 
 
 
     def create_sensor(self, group_name, sensor_type, name):
         if group_name in self.groups:
-            #age oon bala sensor ro avaz kridd inja ham havasetoon b vorodi ha bashe ****
             sensor=Sensor(sensor_type, name)
             self.add_sensor_in_group(group_name, sensor)
             print(f'Sensor {sensor.name} of type {sensor_type}  is created in group {group_name}')
@@ -254,77 +228,111 @@ class admin_panel():
     
     def add_sensor_in_group(self,group_name,sensor):
         if group_name in self.groups:
-           self.groups[group_name].append(sensor)
+           self.groups[group_name]['sensors'].append(sensor)
            print(f'{sensor.name} was added to the {group_name} group')
         else:
            print(f'{group_name} has not been created yet')
 
 
     #ahsant 
-    def get_data_from_sensor_in_group(self, group_name):  #injaro nmidonm doroste ya na
+    def get_data_from_sensor_in_group(self, group_name): 
         if group_name in self.groups:
-            for sensor in self.groups[group_name]:
-                if isinstance(sensor, Sensor):
-                    sensor_data = {sensor.name: sensor.get_data()}
-                    print(f"Sensor data from group '{group_name}': {sensor_data}")
-                    return sensor_data
-                if not sensor:
-                    print(f"No sensors found in group '{group_name}'.")
-                return []
+            sensors = self.groups[group_name]['sensors']
+            if not sensors:
+               print(f"No sensors found in group '{group_name}'.")
+               return []
+        
+            sensor_data = {sensor.name: sensor.get_data() for sensor in sensors}
+            print(f"Sensor data from group '{group_name}': {sensor_data}")
+            return sensor_data
+        else:
+            print(f'{group_name} has not been created yet')
+            return []
+            
                 #injaa mire tooye group harchi peyda krd ro .get_data() mikone
                 #ma too yek group momkene ma device dashte bashim , sensor va ..
                 #aval bayad ba yek if check kone ke sensoree ya na
                 #age sensor bashe haal mitonim sensor_get_data bashe
                 #bad bejaye return --> print kone
-            
-        else:
-           print(f'{group_name} has not been created yet')
-        return []
-
-
+    
 
     def find_device_location(self, device_name, device_type): #tabe entekhabi
-        for group_name, devices in self.groups.items():
-            for device in devices:
-                if isinstance(device, Device) and device.name == device_name and device.device_type == device_type:
+        for group_name, group_data in self.groups.items():
+            for device in group_data['devices']:
+                if device.name == device_name and device.device_type == device_type:
                    print(f"Device '{device_name}' of type '{device_type}' is in group '{group_name}'.")
                    return group_name 
         print(f"Device '{device_name}' of type '{device_type}' not found in any group.")
         return None
 
 
+    def show_menu(self):
+        while True:
+            print("\n1. Create Group")
+            print("2. Add Device")
+            print("3. Turn On All Devices in Group")
+            print("4. Turn Off All Devices in Group")
+            print("5. Add Sensor")
+            print("6. Get Sensor Data")
+            print("7. Create Multiple Devices")
+            print("8. Find Device Location")
+            print("9. Remove Device from Group")
+            print("10. Exit")
+            choice = input("Choose an option: ")
+            
+            if choice == "1":
+                group_name = input("Enter group name: ").strip()
+                self.create_group(group_name)
+           
+            elif choice == "2":
+                group_name = input("Enter group name: ").strip()
+                device_type = input("Enter device type: ").strip()
+                device_name = input("Enter device name: ").strip()
+                self.create_device(group_name, device_type, device_name)
+           
+            elif choice == "3":
+                group_name = input("Enter group name: ")
+                self.turn_on_all_in_group(group_name)
+           
+            elif choice == "4":
+                group_name = input("Enter group name: ")
+                self.turn_off_all_in_group(group_name)
+           
+            elif choice == "5":
+                group_name = input("Enter group name: ")
+                sensor_type = input("Enter sensor type: ")
+                sensor_name = input("Enter sensor name: ")
+                self.create_sensor(group_name, sensor_type, sensor_name)
+           
+            elif choice == "6":
+                group_name = input("Enter group name: ")
+                self.get_data_from_sensors_in_group(group_name)
+           
+            elif choice == "7":
+                group_name = input('Please enter group name for multiple devices: ').strip()
+                device_type = input('Please enter device type: ').strip()
+                number_of_devices = int(input('Please enter the number of devices you want to create: '))
+                self.create_multiple_devices(group_name, device_type, number_of_devices)
+            
+            elif choice == "8":  
+                device_name = input('Please enter the device name to find its location: ').strip()
+                device_type = input('Please enter the device type: ').strip()
+                self.find_device_location(device_name, device_type)
+
+            elif choice == "9":  
+                group_name = input("Enter group name: ").strip()
+                device_name = input("Enter the device name to remove: ").strip()
+                self.remove_device_from_group(group_name, device_name)
+
+            elif choice == "10":
+                break
+
+            else:
+                print("Invalid option, try again")
+
+
 admin=admin_panel()
+admin.show_menu()
+GPIO.cleanup()
 
-group_name=input('please enter group name: ').strip()
-admin.create_group(group_name)
-
-
-device_type=input('please enter device type: ').strip()
-device_name=input('please enter device name: ').strip()
-admin.create_device(group_name,device_type,device_name)
-
-group_name = input('Please enter group name for multiple devices: ').strip()
-device_type = input('Please enter device type: ').strip()
-number_of_devices = int(input('Please enter the number of devices you want to create: '))
-admin.create_multiple_devices(group_name, device_type, number_of_devices)
-
-group_to_turn_on=input('please enter name of group you want to turn on the devices: ').strip()
-admin.turn_on_all_in_groups(group_to_turn_on)
-
-group_to_turn_off=input('please enter name of group you want to turn off the devices: ').strip()
-admin.turn_off_all_in_groups(group_to_turn_off)
-
-sensor_type = input('Please enter sensor type: ').strip()
-name= input('please enter sensor name: ').strip()
-admin.create_sensor(sensor_type, name)
-
-admin.add_sensor_in_group(group_name, new_sensor)
-
-group_to_get_data=input('please enter the name of group you want to get sensor data: ').strip()
-admin.get_data_from_sensor_in_group(group_to_get_data)
-
-
-device_name = input('Please enter the device name to find its location: ').strip()
-device_type = input('Please enter the device type: ').strip()
-admin.find_device_location(device_name, device_type)
 
