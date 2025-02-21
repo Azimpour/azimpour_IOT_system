@@ -29,6 +29,13 @@ ostad mamnon az vaghti ke gozashtin man ta jaei ke balad bodam taghirato ijad ka
 mamnon misham chek konin
 *************************
 ***************************
+
+
+
+
+APM:
+Ahsant kamelan okeye khaste nabashid
+
 '''
 
 import RPi.GPIO as GPIO
