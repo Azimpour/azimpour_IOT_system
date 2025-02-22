@@ -36,6 +36,8 @@ mamnon misham chek konin
 APM:
 Ahsant kamelan okeye khaste nabashid
 
+kheili mamnonm
+
 '''
 
 import RPi.GPIO as GPIO
